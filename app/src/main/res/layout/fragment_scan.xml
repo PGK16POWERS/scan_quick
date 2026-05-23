@@ -5,7 +5,141 @@
     android:layout_height="match_parent"
     android:background="@color/white"
     android:orientation="vertical"
+    android:weightSum="10"
     tools:context=".scan">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:padding="18dp"
+        android:gravity="start">
+
+        <ImageView
+            android:id="@+id/back_button"
+            android:layout_width="35dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_button"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="9"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:paddingRight="18dp"
+        android:paddingLeft="18dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/manual_input_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp"
+            android:background="@drawable/def_border"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Product code:"
+                    android:textColor="#CBCBCB"/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/input_bg"
+                    android:inputType="text"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="12dp"
+                    android:weightSum="10"
+                    android:layout_gravity="fill_horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/cancel_one"
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="4.8"
+                        android:background="@drawable/tertiary_button"
+                        android:text="Cancel"
+                        android:textAllCaps="false"
+                        android:elegantTextHeight="true"/>
+
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="0.4"/>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="0dp"
+                        android:layout_height="56dp"
+                        android:layout_weight="4.8"
+                        android:background="@drawable/primary_button"
+                        android:text="Submit"
+                        android:textAllCaps="false"
+                        android:elegantTextHeight="true"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/scan_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="18dp"
+            android:background="@drawable/def_border"
+            android:orientation="vertical">
+
+            <androidx.camera.view.PreviewView
+                android:id="@+id/camera_temp"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/manual_input_button"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/primary_button"
+                android:text="Enter code manually"
+                android:textColor="#FFFFFF"
+                android:textAllCaps="false"
+                android:elegantTextHeight="true"/>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/tertiary_button"
+                android:text="Cancel"
+                android:textColor="#646464"
+                android:fontFamily="@font/uber_move_text_bold"
+                android:textAllCaps="false"
+                android:elegantTextHeight="true"/>
+
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 
 

@@ -50,6 +50,7 @@
                 android:textAlignment="center"/>
 
             <LinearLayout
+                android:id="@+id/product_1"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="16dp"
@@ -77,6 +78,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/product_2"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"
@@ -104,6 +106,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/product_3"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginTop="8dp"

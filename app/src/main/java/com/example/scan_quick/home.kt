@@ -32,6 +32,22 @@ class home : Fragment() {
             findNavController().navigate(R.id.scan)
         }
 
+        val prod = view.findViewById<LinearLayout>(R.id.product_1)
+        val prod2 = view.findViewById<LinearLayout>(R.id.product_2)
+        val prod3 = view.findViewById<LinearLayout>(R.id.product_3)
+
+        prod.setOnClickListener { _ ->
+            findNavController().navigate(R.id.product)
+        }
+
+        prod2.setOnClickListener { _ ->
+            findNavController().navigate(R.id.product)
+        }
+
+        prod3.setOnClickListener { _ ->
+            findNavController().navigate(R.id.product)
+        }
+
         return view
     }
 

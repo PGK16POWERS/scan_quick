@@ -1,59 +1,89 @@
 package com.example.scan_quick
 
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.INVISIBLE
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.LinearLayout
+import androidx.appcompat.widget.AppCompatButton
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.Preview
+import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.camera.view.PreviewView
+import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [scan.newInstance] factory method to
- * create an instance of this fragment.
- */
 class scan : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var previewView: PreviewView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_scan, container, false)
+        val view = inflater.inflate(R.layout.fragment_scan, container, false)
+
+        previewView = view.findViewById(R.id.camera_temp)
+
+        if (
+            ContextCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED
+        ) {
+            startCamera(previewView)
+        } else {
+            requestPermissions(
+                arrayOf(Manifest.permission.CAMERA), 10
+            )
+        }
+
+        val backButton = view.findViewById<ImageView>(R.id.back_button)
+
+        backButton.setOnClickListener { _->
+            findNavController().navigate(R.id.home2)
+        }
+
+        val scanBlock = view.findViewById<LinearLayout>(R.id.scan_block)
+        val manualInputBlock = view.findViewById<LinearLayout>(R.id.manual_input_block)
+        val manualInputButton = view.findViewById<AppCompatButton>(R.id.manual_input_button)
+        val cancelButton = view.findViewById<AppCompatButton>(R.id.cancel_one)
+
+        manualInputBlock.visibility = View.GONE
+
+        manualInputButton.setOnClickListener { _ ->
+            manualInputBlock.visibility = View.VISIBLE
+            scanBlock.visibility = View.GONE
+        }
+
+        cancelButton.setOnClickListener { _ ->
+            manualInputBlock.visibility = View.GONE
+            scanBlock.visibility = View.VISIBLE
+        }
+
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment scan.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            scan().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun startCamera(previewView: PreviewView) {
+        val cameraProviderFuture = ProcessCameraProvider.getInstance(requireContext())
+
+        cameraProviderFuture.addListener({
+            val cameraProvider = cameraProviderFuture.get()
+            val preview = Preview.Builder().build()
+            preview.setSurfaceProvider(previewView.surfaceProvider)
+            val cameraSelector = CameraSelector.DEFAULT_BACK_CAMERA
+            cameraProvider.unbindAll()
+            cameraProvider.bindToLifecycle(
+                viewLifecycleOwner,
+                cameraSelector,
+                preview
+            )}, ContextCompat.getMainExecutor(requireContext()))
     }
+
 }
